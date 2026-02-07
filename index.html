@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayush 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background: radial-gradient(circle at top, #ff5fa2, #1a0012);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  overflow:hidden;
+}
+
+/* 🎶 MUSIC OVERLAY */
+#musicOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+#musicOverlay p{
+  font-size:18px;
+  color:#ff9fcf;
+  background:#1a0012;
+  padding:18px 26px;
+  border-radius:30px;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1.05);}
+}
+
+/* 🎉 CONFETTI */
+.confetti{
+  position:fixed;
+  top:-10px;
+  width:10px;
+  height:10px;
+  background: hsl(var(--hue), 80%, 60%);
+  animation: fall linear forwards;
+  z-index:1000;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  padding:20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  border-radius:30px;
+  padding:25px;
+  box-shadow:0 25px 50px rgba(0,0,0,0.6);
+  animation:fadeUp 1.2s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(40px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+h1{
+  text-align:center;
+  color:#ffd6ec;
+  margin-bottom:10px;
+}
+
+p{
+  text-align:center;
+  font-size:15px;
+  opacity:0.95;
+  margin-bottom:14px;
+}
+
+.tease{
+  font-size:14px;
+  color:#ffb6d9;
+}
+
+/* 📸 PHOTO */
+.photo{
+  display:flex;
+  justify-content:center;
+  margin:18px 0;
+}
+
+.photo img{
+  width:200px;
+  height:260px;
+  object-fit:cover;
+  border-radius:25px;
+  box-shadow:0 15px 30px rgba(0,0,0,0.5);
+}
+
+/* 💕 BUTTONS */
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:20px;
+}
+
+button{
+  padding:12px 22px;
+  border:none;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+#yes{
+  background:#ff4f9a;
+  color:white;
+}
+
+#yes:hover{
+  transform:scale(1.1);
+}
+
+#no{
+  background:#444;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎶 MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="perfect.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎶 TAP TO START -->
+<div id="musicOverlay">
+  <p>Tap to start the magic 🎶💖</p>
+</div>
+
+<div class="container">
+  <div class="card" id="card">
+    <h1>MR.Aayush Kumar Singh 💖</h1>
+
+    <p class="tease">Okay listen…</p>
+    
+
+    <p>
+      Tumhare saath reh kar lagta hai jaise sab kuch sahi jagah aa gaya ho 🥹<br>
+      Aur tumhari presence hi meri sabse badi comfort hai
+    </p>
+
+    <h1>Will you be mine? 🌹</h1>
+
+    <div class="photo">
+      <img src="uss.jpeg" alt="Us 💕">
+    </div>
+
+    <div class="buttons">
+      <button id="yes">Yes 💕</button>
+      <button id="no">No 🙈</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const music = document.getElementById("bgMusic");
+const overlay = document.getElementById("musicOverlay");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const card = document.getElementById("card");
+
+/* 🎶 Start music */
+overlay.addEventListener("click", ()=>{
+  music.play();
+  overlay.style.display = "none";
+});
+
+/* 😈 NO button escape */
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("click", (e)=>{
+  e.preventDefault();
+  moveNo();
+});
+
+function moveNo(){
+  const x = Math.random()*200 - 100;
+  const y = Math.random()*200 - 100;
+  noBtn.style.transform =
+    `translate(${x}px, ${y}px) rotate(${Math.random()*20-10}deg)`;
+}
+
+/* 💍 YES → CONFETTI + VIBRATION */
+yesBtn.addEventListener("click", ()=>{
+  if(navigator.vibrate){
+    navigator.vibrate([200,100,200,100,300]);
+  }
+
+  card.innerHTML = `
+    <h1>YESSS 😭💍</h1>
+    <p>
+      Acha hua yes kiya varna kaat vaat deti tumko 🥹💕<br><br>
+      Happy Proposal Day, mera bubuuu 💖
+    </p>
+  `;
+
+  launchConfetti();
+});
+
+/* 🎉 CONFETTI FUNCTION */
+function launchConfetti(){
+  for(let i=0;i<120;i++){
+    const confetti=document.createElement("div");
+    confetti.className="confetti";
+    confetti.style.left=Math.random()*100+"vw";
+    confetti.style.animationDuration=(Math.random()*3+2)+"s";
+    confetti.style.setProperty("--hue", Math.random()*360);
+    document.body.appendChild(confetti);
+
+    setTimeout(()=>confetti.remove(),5000);
+  }
+}
+</script>
+
+</body>
+</html>
+
+
